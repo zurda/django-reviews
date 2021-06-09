@@ -9,12 +9,35 @@
 </head>
 
 <body>
+  <h4>Recently added reviews:</h4>
+  {% if latest_review_list %}
+  <ul>
+    {% for review in latest_review_list %}
+    <li><a href="/reviews/{{ review.id }}/">{{ review.headline }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <h4>Recently added titles:</h4>
   {% if latest_title_list %}
   <ul>
     {% for title in latest_title_list %}
     <li><a href="/reviews/{{ title.id }}/">{{ title.name }}</a></li>
     {% endfor %}
   </ul>
+
+  <h4>Show all reviews for title:</h4>
+  <ul>
+    {% for title in latest_title_list %}
+    {% if title.review_set.all %}
+    <b>All reviews for {{ title }}</b>
+    {% for review in title.review_set.all %}
+    <li><a href="/reviews/{{ title.id }}/">{{ review }}</a></li>
+    {% endfor %}
+    {% endif %}
+    {% endfor %}
+  </ul>
+
   {% else %}
   <p>No titles available.</p>
   {% endif %}
