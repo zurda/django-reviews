@@ -1,4 +1,8 @@
-from django.http import HttpResponse
+from django.shortcuts import render
+
+from .models import Title
 
 def index(request):
-    return HttpResponse("Reviews index.")
+    latest_title_list = Title.objects.order_by('-created_at')[:5]
+    context = {'latest_title_list': latest_title_list}
+    return render(request, 'reviews/index.html', context)
